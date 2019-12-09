@@ -7,7 +7,7 @@
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
-#import "VertiTransferVCX.h"
+// #import "VertiTransferVCX.h"
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -27,7 +27,7 @@
 #import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
 #endif
 
-#import "vcx.h"
+#import "vcx/vcx/vcx.h"
 
 @implementation RnIndy
 RCT_EXPORT_MODULE();
