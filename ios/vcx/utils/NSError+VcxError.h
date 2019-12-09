@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "vcx.h"
+#import "../vcx/vcx.h"
 
 @interface NSError (VcxError)
 

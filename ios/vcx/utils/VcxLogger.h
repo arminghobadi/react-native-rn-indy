@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "vcx.h"
-#include "vcx.h"
+#import "../vcx/vcx.h"
+#include "../vcx/vcx.h"
 
 @interface VcxLogger : NSObject
 

@@ -10,7 +10,7 @@
 #import "NSError+VcxError.h"
 #import "VcxTypes.h"
 #import "VcxErrors.h"
-#include "vcx.h"
+#include "../vcx/vcx.h"
 
 @interface VcxLogger ()
 

@@ -8,7 +8,7 @@
 #import "VcxTypes.h"
 #import "VcxErrors.h"
 #import "VcxLogger.h"
-#include "vcx.h"
+#include "../vcx/vcx.h"
 
 static NSString *commandCallbackKey = @"commandCallback";
 
