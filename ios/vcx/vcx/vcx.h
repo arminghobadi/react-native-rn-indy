@@ -17,5 +17,6 @@ FOUNDATION_EXPORT const unsigned char vcxVersionString[];
 // In this header, you should import all the public headers of your framework using statements like #import <vcx/PublicHeader.h>
 
 #import "../ConnectMeVcx.h"
-#include "libvcx.h"
+// #include "../include/libvcx.h"
+#include "../include/libvcx.h"
 
