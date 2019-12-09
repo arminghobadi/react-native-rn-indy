@@ -3,29 +3,29 @@
 #import "RnIndy.h"
 
 #import <React/RCTLog.h>
-// #import <LocalAuthentication/LocalAuthentication.h>
-// #import <React/RCTUtils.h>
-// #import "React/RCTConvert.h"
+#import <LocalAuthentication/LocalAuthentication.h>
+#import <React/RCTUtils.h>
+#import "React/RCTConvert.h"
 
 #import "VertiTransferVCX.h"
 
-// import RCTBridge
-// #if __has_include(<React/RCTBridge.h>)
-// #import <React/RCTBridge.h>
-// #elif __has_include("RCTBridge.h")
-// #import "RCTBridge.h"
-// #else
-// #import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
-// #endif
+import RCTBridge
+#if __has_include(<React/RCTBridge.h>)
+#import <React/RCTBridge.h>
+#elif __has_include("RCTBridge.h")
+#import "RCTBridge.h"
+#else
+#import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
+#endif
 
-// // import RCTEventDispatcher
-// #if __has_include(<React/RCTEventDispatcher.h>)
-// #import <React/RCTEventDispatcher.h>
-// #elif __has_include("RCTEventDispatcher.h")
-// #import "RCTEventDispatcher.h"
-// #else
-// #import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
-// #endif
+// import RCTEventDispatcher
+#if __has_include(<React/RCTEventDispatcher.h>)
+#import <React/RCTEventDispatcher.h>
+#elif __has_include("RCTEventDispatcher.h")
+#import "RCTEventDispatcher.h"
+#else
+#import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
+#endif
 
 #import "vcx.h"
 
@@ -43,12 +43,12 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
 // // https://facebook.github.io/react-native/docs/native-modules-ios.html
 
 
-// // List all your events here
-// // https://facebook.github.io/react-native/releases/next/docs/native-modules-ios.html#sending-events-to-javascript
-// - (NSArray<NSString *> *)supportedEvents
-// {
-//   return @[@"NoEvent"];
-// }
+// List all your events here
+// https://facebook.github.io/react-native/releases/next/docs/native-modules-ios.html#sending-events-to-javascript
+- (NSArray<NSString *> *)supportedEvents
+{
+  return @[@"NoEvent"];
+}
 
 // #pragma mark - Private methods
 // // Implement methods that you want to export to the native module

@@ -20,9 +20,9 @@
 // #import “React/RCTEventEmitter.h” // Required when used as a Pod in a Swift project
 // #endif
 
-// #import "React/RCTEventEmitter.h" // Required when used as a Pod in a Swift project
+#import "React/RCTEventEmitter.h" // Required when used as a Pod in a Swift project
 
-@interface RnIndy : NSObject <RCTBridgeModule>
+@interface RnIndy : RCTEventEmitter <RCTBridgeModule>
 
 @end
 // RCT_EXPORT_MODULE(RnIndy);
