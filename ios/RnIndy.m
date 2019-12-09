@@ -9,7 +9,7 @@
 
 #import "VertiTransferVCX.h"
 
-import RCTBridge
+// import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
 #import <React/RCTBridge.h>
 #elif __has_include("RCTBridge.h")
