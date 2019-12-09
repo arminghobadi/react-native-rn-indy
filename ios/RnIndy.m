@@ -61,22 +61,22 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
 // #pragma mark - React Native exposed methods
 
 // // delete connection
-RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
-                  resolver: (RCTPromiseResolveBlock) resolve
-                  rejecter: (RCTPromiseRejectBlock) reject)
-{
-  [[[ConnectMeVcx alloc] init] deleteConnection:connectionHandle
-                                 withCompletion:^(NSError *error)
-  {
-     if (error != nil && error.code != 0)
-     {
-       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-       reject(indyErrorCode, @"Error occurred while deleting connection", error);
-     } else {
-       resolve(@true);
-     }
-  }];
-}
+// RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
+//                   resolver: (RCTPromiseResolveBlock) resolve
+//                   rejecter: (RCTPromiseRejectBlock) reject)
+// {
+//   [[[ConnectMeVcx alloc] init] deleteConnection:connectionHandle
+//                                  withCompletion:^(NSError *error)
+//   {
+//      if (error != nil && error.code != 0)
+//      {
+//        NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+//        reject(indyErrorCode, @"Error occurred while deleting connection", error);
+//      } else {
+//        resolve(@true);
+//      }
+//   }];
+// }
 
 // RCT_EXPORT_METHOD(init: (NSString *)config
 //                   resolver: (RCTPromiseResolveBlock) resolve
@@ -93,14 +93,14 @@ RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
 //   }];
 // }
 
-// RCT_EXPORT_METHOD(reset:
-//                   resolver: (RCTPromiseResolveBlock) resolve
-//                   rejecter: (RCTPromiseRejectBlock) reject)
-// {
-//   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//     resolve(@{});
-//   });
-// }
+RCT_EXPORT_METHOD(reset:
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    resolve(@{});
+  });
+}
 
 // RCT_EXPORT_METHOD(getSerializedConnection: (NSInteger)connectionHandle
 //                   resolver: (RCTPromiseResolveBlock) resolve
