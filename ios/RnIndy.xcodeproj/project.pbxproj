@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3DE03981F70CF5D070848259 /* libPods-RnIndy.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 281D1E1E0E36C0AD58E4B68D /* libPods-RnIndy.a */; };
 		B3E7B58A1CC2AC0600A0062D /* RnIndy.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* RnIndy.m */; };
 /* End PBXBuildFile section */
 
@@ -24,8 +25,11 @@
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libRnIndy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRnIndy.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		281D1E1E0E36C0AD58E4B68D /* libPods-RnIndy.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RnIndy.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EFB34E602904F2C35460592 /* Pods-RnIndy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RnIndy.release.xcconfig"; path = "Pods/Target Support Files/Pods-RnIndy/Pods-RnIndy.release.xcconfig"; sourceTree = "<group>"; };
 		B3E7B5881CC2AC0600A0062D /* RnIndy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RnIndy.h; sourceTree = "<group>"; };
 		B3E7B5891CC2AC0600A0062D /* RnIndy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RnIndy.m; sourceTree = "<group>"; };
+		C4DDD0FC06274A3D043C7E5C /* Pods-RnIndy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RnIndy.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RnIndy/Pods-RnIndy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3DE03981F70CF5D070848259 /* libPods-RnIndy.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +58,26 @@
 				B3E7B5881CC2AC0600A0062D /* RnIndy.h */,
 				B3E7B5891CC2AC0600A0062D /* RnIndy.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				D66FDF23ED4D8D90412DE321 /* Pods */,
+				F9C5ECA7950A07F9B58364DC /* Frameworks */,
 			);
+			sourceTree = "<group>";
+		};
+		D66FDF23ED4D8D90412DE321 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C4DDD0FC06274A3D043C7E5C /* Pods-RnIndy.debug.xcconfig */,
+				6EFB34E602904F2C35460592 /* Pods-RnIndy.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		F9C5ECA7950A07F9B58364DC /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				281D1E1E0E36C0AD58E4B68D /* libPods-RnIndy.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -63,6 +87,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 58B511EF1A9E6C8500147676 /* Build configuration list for PBXNativeTarget "RnIndy" */;
 			buildPhases = (
+				FD7A00D88DBEE27FCE31D833 /* [CP] Check Pods Manifest.lock */,
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
 				58B511D91A9E6C8500147676 /* CopyFiles */,
@@ -106,6 +131,31 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		FD7A00D88DBEE27FCE31D833 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-RnIndy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
@@ -214,9 +264,10 @@
 		};
 		58B511F01A9E6C8500147676 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C4DDD0FC06274A3D043C7E5C /* Pods-RnIndy.debug.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
-				"$(inherited)",
+					"$(inherited)",
 					/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
 					"$(SRCROOT)/../../../React/**",
 					"$(SRCROOT)/../../react-native/React/**",
@@ -230,6 +281,7 @@
 		};
 		58B511F11A9E6C8500147676 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6EFB34E602904F2C35460592 /* Pods-RnIndy.release.xcconfig */;
 			buildSettings = {
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

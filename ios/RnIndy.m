@@ -1,18 +1,18 @@
 //  Created by react-native-create-bridge
 
-#import "RNIndy.h"
+#import "RnIndy.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
 // import RCTBridge
-#if __has_include(<React/RCTBridge.h>)
-#import <React/RCTBridge.h>
-#elif __has_include("RCTBridge.h")
-#import "RCTBridge.h"
-#else
-#import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
-#endif
+// #if __has_include(<React/RCTBridge.h>)
+// #import <React/RCTBridge.h>
+// #elif __has_include("RCTBridge.h")
+// #import "RCTBridge.h"
+// #else
+// #import "React/RCTBridge.h" // Required when used as a Pod in a Swift project
+// #endif
 
 // import RCTEventDispatcher
 #if __has_include(<React/RCTEventDispatcher.h>)
@@ -25,9 +25,9 @@
 
 #import <vcx/vcx/vcx.h>
 
-@implementation RNIndy
+@implementation RnIndy
 RCT_EXPORT_MODULE();
-@synthesize bridge = _bridge;
+// @synthesize bridge = _bridge;
 
 // Export a native module
 // https://facebook.github.io/react-native/docs/native-modules-ios.html
