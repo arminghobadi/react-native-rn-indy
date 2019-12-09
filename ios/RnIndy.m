@@ -65,7 +65,7 @@ RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[VertiTransferVCX alloc] init] deleteConnection:connectionHandle
+  [[[ConnectMeVcx alloc] init] deleteConnection:connectionHandle
                                  withCompletion:^(NSError *error)
   {
      if (error != nil && error.code != 0)
