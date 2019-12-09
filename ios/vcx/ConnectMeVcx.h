@@ -8,7 +8,7 @@
 
 #ifndef init_h
 #define init_h
-#import "libvcx.h"
+#import "include/libvcx.h"
 
 extern void VcxWrapperCommonCallback(vcx_command_handle_t xcommand_handle,
                                      vcx_error_t err);
