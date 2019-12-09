@@ -32,10 +32,10 @@
 @implementation RnIndy
 RCT_EXPORT_MODULE();
 
-RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
-{
-  RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
-}
+// RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
+// {
+//   RCTLogInfo(@"Pretending to create an event %@ at %@", name, location);
+// }
 
 // @synthesize bridge = _bridge;
 
@@ -78,11 +78,13 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
 //   }];
 // }
 
+ConnectMeVcx *connect = [ConnectMeVcx new];
+
 RCT_EXPORT_METHOD(init: (NSString *)config
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[ConnectMeVcx new] initWithConfig:config completion:^(NSError *error) {
+  [*connect initWithConfig:config completion:^(NSError *error) {
     if (error != nil && error.code != 0 && error.code != 1044)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -93,14 +95,14 @@ RCT_EXPORT_METHOD(init: (NSString *)config
   }];
 }
 
-RCT_EXPORT_METHOD(reset:
-                  resolver: (RCTPromiseResolveBlock) resolve
-                  rejecter: (RCTPromiseRejectBlock) reject)
-{
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-    resolve(@{});
-  });
-}
+// RCT_EXPORT_METHOD(reset:
+//                   resolver: (RCTPromiseResolveBlock) resolve
+//                   rejecter: (RCTPromiseRejectBlock) reject)
+// {
+//   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//     resolve(@{});
+//   });
+// }
 
 // RCT_EXPORT_METHOD(getSerializedConnection: (NSInteger)connectionHandle
 //                   resolver: (RCTPromiseResolveBlock) resolve
