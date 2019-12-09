@@ -7,7 +7,7 @@
 //
 
 
-#define init
+#define init_h
 
 #import "libvcx.h"
 
