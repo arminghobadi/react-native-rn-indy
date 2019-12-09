@@ -4,8 +4,8 @@
 //
 
 #import "NSError+VcxError.h"
-#import "vcx/vcx.h"
-#include "vcx/vcx.h"
+#import "vcx.h"
+#include "vcx.h"
 
 static NSString *const VcxErrorDomain = @"VcxErrorDomain";
 

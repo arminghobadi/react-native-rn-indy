@@ -1,6 +1,6 @@
 //  Created by react-native-create-bridge
 
-#import "RNIndy.h"
+#import "RnIndy.h"
 #import <LocalAuthentication/LocalAuthentication.h>
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
@@ -27,7 +27,7 @@
 
 #import "vcx.h"
 
-@implementation RNIndy
+@implementation RnIndy
 RCT_EXPORT_MODULE();
 @synthesize bridge = _bridge;
 
