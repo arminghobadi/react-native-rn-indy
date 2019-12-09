@@ -6,8 +6,8 @@
 //  Copyright © 2018 GuestUser. All rights reserved.
 //
 
-#ifndef init_h
-#define init_h
+
+#define init
 
 #import "libvcx.h"
 
@@ -220,5 +220,3 @@ withConnectionHandle:(vcx_connection_handle_t)connection_handle
 - (void) getLedgerFees:(void(^)(NSError *error, NSString *fees)) completion;
 
 @end
-
-#endif /* init_h */
