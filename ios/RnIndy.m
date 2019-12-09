@@ -8,6 +8,10 @@
 #import "React/RCTConvert.h"
 
 #include "vcx/ConnectMeVcx.h"
+#import "vcx/utils/NSError+VcxError.h"
+#import "vcx/utils/VcxCallbacks.h"
+#import "vcx/vcx/vcx.h"
+#include "vcx/vcx/vcx.h"
 // #import "VertiTransferVCX.h"
 
 // import RCTBridge
@@ -28,7 +32,7 @@
 #import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
 #endif
 
-#import "vcx/vcx/vcx.h"
+// #import "vcx/vcx/vcx.h"
 
 
 @implementation ConnectMeVcx
