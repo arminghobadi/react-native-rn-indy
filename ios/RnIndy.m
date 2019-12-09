@@ -7,6 +7,7 @@
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
+#include "vcx/ConnectMeVcx.h"
 // #import "VertiTransferVCX.h"
 
 // import RCTBridge
