@@ -5,6 +5,8 @@
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
+#import "ConnectMeVcx.h"
+
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
 #import <React/RCTBridge.h>
