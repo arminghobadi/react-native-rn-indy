@@ -78,20 +78,20 @@ RCT_EXPORT_METHOD(addEvent:(NSString *)name location:(NSString *)location)
 //   }];
 // }
 
-// RCT_EXPORT_METHOD(init: (NSString *)config
-//                   resolver: (RCTPromiseResolveBlock) resolve
-//                   rejecter: (RCTPromiseRejectBlock) reject)
-// {
-//   [[[VertiTransferVCX alloc] init] initWithConfig:config completion:^(NSError *error) {
-//     if (error != nil && error.code != 0 && error.code != 1044)
-//     {
-//       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-//       reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
-//     }else{
-//       resolve(@true);
-//     }
-//   }];
-// }
+RCT_EXPORT_METHOD(init: (NSString *)config
+                  resolver: (RCTPromiseResolveBlock) resolve
+                  rejecter: (RCTPromiseRejectBlock) reject)
+{
+  [+ initWithConfig:config completion:^(NSError *error) {
+    if (error != nil && error.code != 0 && error.code != 1044)
+    {
+      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+      reject(indyErrorCode, [NSString stringWithFormat:@"Error occurred while initializing vcx: %@ :: %ld",error.domain, (long)error.code], error);
+    }else{
+      resolve(@true);
+    }
+  }];
+}
 
 RCT_EXPORT_METHOD(reset:
                   resolver: (RCTPromiseResolveBlock) resolve
