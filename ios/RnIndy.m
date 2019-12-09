@@ -65,17 +65,17 @@ RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[VertiTransferVCX alloc] init] deleteConnection:connectionHandle
-                                 withCompletion:^(NSError *error)
-  {
-     if (error != nil && error.code != 0)
-     {
-       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
-       reject(indyErrorCode, @"Error occurred while deleting connection", error);
-     } else {
-       resolve(@true);
-     }
-  }];
+  // [[[VertiTransferVCX alloc] init] deleteConnection:connectionHandle
+  //                                withCompletion:^(NSError *error)
+  // {
+  //    if (error != nil && error.code != 0)
+  //    {
+  //      NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
+  //      reject(indyErrorCode, @"Error occurred while deleting connection", error);
+  //    } else {
+  //      resolve(@true);
+  //    }
+  // }];
 }
 
 // RCT_EXPORT_METHOD(init: (NSString *)config
