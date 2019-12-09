@@ -27,7 +27,7 @@
 // #import "React/RCTEventDispatcher.h" // Required when used as a Pod in a Swift project
 // #endif
 
-// #import "vcx.h"
+#import "vcx.h"
 
 @implementation RnIndy
 RCT_EXPORT_MODULE();
