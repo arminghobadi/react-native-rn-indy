@@ -78,13 +78,11 @@ RCT_EXPORT_MODULE();
 //   }];
 // }
 
-ConnectMeVcx *armin = [ConnectMeVcx new];
-
 RCT_EXPORT_METHOD(init: (NSString *)config
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [*armin initWithConfig:config completion:^(NSError *error) {
+  [[[ConnectMeVcx alloc] init] initWithConfig:config completion:^(NSError *error) {
     if (error != nil && error.code != 0 && error.code != 1044)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
