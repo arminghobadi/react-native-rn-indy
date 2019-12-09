@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "ConnectMeVcx.h"
+#import "VertiTransferVCX.h"
 #import "utils/NSError+VcxError.h"
 #import "utils/VcxCallbacks.h"
 #import "vcx.h"
@@ -309,7 +309,7 @@ void VcxWrapperCommonNumberStringCallback(vcx_command_handle_t xcommand_handle,
 }
 
 
-@implementation ConnectMeVcx
+@implementation VertiTransferVCX
 
 - (void)initWithConfig:(NSString *)config
             completion:(void (^)(NSError *error))completion

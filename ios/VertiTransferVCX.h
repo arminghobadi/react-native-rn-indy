@@ -74,7 +74,7 @@ extern void VcxWrapperCommonNumberStringCallback(vcx_command_handle_t xcommand_h
                                                  vcx_command_handle_t handle,
                                                  const char *const arg2);
 
-@interface ConnectMeVcx : NSObject
+@interface VertiTransferVCX : NSObject
 
 - (void)initWithConfig:(NSString *)config
             completion:(void (^)(NSError *error))completion;

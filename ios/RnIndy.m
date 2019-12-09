@@ -5,7 +5,7 @@
 #import <React/RCTUtils.h>
 #import "React/RCTConvert.h"
 
-#import "ConnectMeVcx.h"
+#import "VertiTransferVCX.h"
 
 // import RCTBridge
 #if __has_include(<React/RCTBridge.h>)
@@ -57,7 +57,7 @@ RCT_EXPORT_METHOD(deleteConnection:(NSInteger) connectionHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] deleteConnection:connectionHandle
+  [[[VertiTransferVCX alloc] init] deleteConnection:connectionHandle
                                  withCompletion:^(NSError *error)
   {
      if (error != nil && error.code != 0)
@@ -74,7 +74,7 @@ RCT_EXPORT_METHOD(init: (NSString *)config
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] initWithConfig:config completion:^(NSError *error) {
+  [[[VertiTransferVCX alloc] init] initWithConfig:config completion:^(NSError *error) {
     if (error != nil && error.code != 0 && error.code != 1044)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -100,7 +100,7 @@ RCT_EXPORT_METHOD(getSerializedConnection: (NSInteger)connectionHandle
 {
   // TODO call vcx_connection_serialize and pass connectionHandle
   // it would return a string
-  [[[ConnectMeVcx alloc] init] connectionSerialize:connectionHandle
+  [[[VertiTransferVCX alloc] init] connectionSerialize:connectionHandle
                                               completion:^(NSError *error, NSString *state) {
     if (error != nil && error.code != 0)
     {
@@ -119,7 +119,7 @@ RCT_EXPORT_METHOD(deserializeConnection: (NSString *)serializedConnection
 {
   // TODO call vcx_connection_deserialize and pass serializedConnection
   // it would return an error code and an integer connection handle in callback
-  [[[ConnectMeVcx alloc] init] connectionDeserialize:serializedConnection completion:^(NSError *error, NSInteger connectionHandle) {
+  [[[VertiTransferVCX alloc] init] connectionDeserialize:serializedConnection completion:^(NSError *error, NSInteger connectionHandle) {
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -134,7 +134,7 @@ RCT_EXPORT_METHOD(decryptWalletFile: (NSString *) config
                            resolver: (RCTPromiseResolveBlock) resolve
                            rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] importWallet: config
+  [[[VertiTransferVCX alloc] init] importWallet: config
                                completion:^(NSError *error) {
     if(error != nil && error.code != 0){
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -150,7 +150,7 @@ RCT_EXPORT_METHOD(shutdownVcx: (BOOL *) deletePool
                     resolver: (RCTPromiseResolveBlock) resolve
                     rejecter: (RCTPromiseRejectBlock) reject)
 {
-  resolve([NSNumber numberWithInt:[[[ConnectMeVcx alloc] init] vcxShutdown: deletePool]]);
+  resolve([NSNumber numberWithInt:[[[VertiTransferVCX alloc] init] vcxShutdown: deletePool]]);
 }
 
 
@@ -160,7 +160,7 @@ RCT_EXPORT_METHOD(credentialCreateWithMsgId: (NSString *) sourceId
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-    [[[ConnectMeVcx alloc] init] credentialCreateWithMsgid:sourceId
+    [[[VertiTransferVCX alloc] init] credentialCreateWithMsgid:sourceId
                                           connectionHandle:connectionHandle
                                                      msgId:messageId
                                                 completion:^(NSError *error, NSInteger credentialHandle, NSString* credentialOffer) {
@@ -183,7 +183,7 @@ RCT_EXPORT_METHOD(serializeClaimOffer: (NSInteger)credentialHandle
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   // it would return error code, json string of credential inside callback
-  [[[ConnectMeVcx alloc] init] credentialSerialize:credentialHandle completion:^(NSError *error, NSString *claimOffer) {
+  [[[VertiTransferVCX alloc] init] credentialSerialize:credentialHandle completion:^(NSError *error, NSString *claimOffer) {
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -199,7 +199,7 @@ RCT_EXPORT_METHOD(deserializeClaimOffer: (NSString *)serializedCredential
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
   // it would return an error code and an integer credential handle in callback
-  [[[ConnectMeVcx alloc] init] credentialDeserialize:serializedCredential
+  [[[VertiTransferVCX alloc] init] credentialDeserialize:serializedCredential
                                           completion:^(NSError *error, NSInteger credentailHandle) {
     if (error != nil && error.code != 0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -217,7 +217,7 @@ RCT_EXPORT_METHOD(sendClaimRequest: (NSInteger) credentialHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] credentialSendRequest:credentialHandle
+  [[[VertiTransferVCX alloc] init] credentialSendRequest:credentialHandle
                                     connectionHandle:connectionHandle
                                        paymentHandle:paymentHandle
                                           completion:^(NSError *error) {
@@ -250,7 +250,7 @@ RCT_EXPORT_METHOD(createOneTimeInfo: (NSString *)config
                            resolver: (RCTPromiseResolveBlock) resolve
                            rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] agentProvisionAsync:config completion:^(NSError *error, NSString *oneTimeInfo) {
+  [[[VertiTransferVCX alloc] init] agentProvisionAsync:config completion:^(NSError *error, NSString *oneTimeInfo) {
     NSLog(@"createOneTimeInfo callback:%@",oneTimeInfo);
     if (error != nil && error.code != 0)
     {
@@ -268,7 +268,7 @@ RCT_EXPORT_METHOD(createConnectionWithInvite: (NSString *)invitationId
                                     resolver: (RCTPromiseResolveBlock) resolve
                                     rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] connectionCreateWithInvite:invitationId
+  [[[VertiTransferVCX alloc] init] connectionCreateWithInvite:invitationId
                                             inviteDetails:inviteDetails
                                                completion:^(NSError *error, NSInteger connectionHandle) {
      if (error != nil && error.code != 0)
@@ -286,7 +286,7 @@ RCT_EXPORT_METHOD(vcxAcceptInvitation: (NSInteger )connectionHandle
                           resolver: (RCTPromiseResolveBlock) resolve
                           rejecter: (RCTPromiseRejectBlock) reject)
 {
-   [[[ConnectMeVcx alloc] init] connectionConnect:connectionHandle
+   [[[VertiTransferVCX alloc] init] connectionConnect:connectionHandle
                                             connectionType:connectionType
                                                completion:^(NSError *error, NSString *inviteDetails) {
 
@@ -305,7 +305,7 @@ RCT_EXPORT_METHOD(vcxUpdatePushToken: (NSString *)config
                          resolver: (RCTPromiseResolveBlock) resolve
                          rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] agentUpdateInfo:config completion:^(NSError *error) {
+  [[[VertiTransferVCX alloc] init] agentUpdateInfo:config completion:^(NSError *error) {
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -339,7 +339,7 @@ RCT_EXPORT_METHOD(updateClaimOfferState: (int)credentialHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] credentialUpdateState:credentialHandle
+  [[[VertiTransferVCX alloc] init] credentialUpdateState:credentialHandle
                                           completion:^(NSError *error, NSInteger state)
   {
     if (error != nil && error.code != 0) {
@@ -359,7 +359,7 @@ RCT_EXPORT_METHOD(getClaimOfferState: (int)credentialHandle
   // TODO: Add vcx wrapper method for vcx_credential_get_state
   // call vcx_credential_get_state and pass credentialHandle
 
-  [[[ConnectMeVcx alloc] init] credentialGetState:credentialHandle completion:^(NSError *error, NSInteger state) {
+  [[[VertiTransferVCX alloc] init] credentialGetState:credentialHandle completion:^(NSError *error, NSInteger state) {
     if (error != nil && error.code != 0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occurred while getting claim offer state", error);
@@ -374,7 +374,7 @@ RCT_EXPORT_METHOD(getClaimVcx: (int)credentialHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] getCredential:credentialHandle completion:^(NSError *error, NSString *credential) {
+  [[[VertiTransferVCX alloc] init] getCredential:credentialHandle completion:^(NSError *error, NSString *credential) {
     if (error != nil && error.code != 0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occurred while getting claim", error);
@@ -390,7 +390,7 @@ RCT_EXPORT_METHOD(exportWallet: (NSString *)exportPath
                                     resolver: (RCTPromiseResolveBlock) resolve
                                     rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] exportWallet:exportPath
+  [[[VertiTransferVCX alloc] init] exportWallet:exportPath
                                 encryptWith:encryptionKey
                                 completion:^(NSError *error, NSInteger exportHandle) {
      if (error != nil && error.code != 0)
@@ -409,7 +409,7 @@ RCT_EXPORT_METHOD(setWalletItem: (NSString *) key
                        rejecter: (RCTPromiseRejectBlock)reject)
 {
   NSString *recordType = @"record_type";
-  [[[ConnectMeVcx alloc] init] addRecordWallet:recordType
+  [[[VertiTransferVCX alloc] init] addRecordWallet:recordType
                                       recordId:key
                                    recordValue:value
                                     completion:^(NSError *error) {
@@ -428,7 +428,7 @@ RCT_EXPORT_METHOD(getWalletItem: (NSString *) key
                        rejecter: (RCTPromiseRejectBlock) reject)
 {
   NSString *recordType = @"record_type";
-  [[[ConnectMeVcx alloc] init] getRecordWallet:recordType
+  [[[VertiTransferVCX alloc] init] getRecordWallet:recordType
                                       recordId:key
                                     completion:^(NSError *error, NSString *result)
    {
@@ -447,7 +447,7 @@ RCT_EXPORT_METHOD(deleteWalletItem: (NSString *) key
                        rejecter: (RCTPromiseRejectBlock) reject)
 {
   NSString *recordType = @"record_type";
-  [[[ConnectMeVcx alloc] init] deleteRecordWallet:recordType
+  [[[VertiTransferVCX alloc] init] deleteRecordWallet:recordType
                                          recordId:key
                                        completion:^(NSError *error) {
      if (error != nil && error.code != 0)
@@ -467,7 +467,7 @@ RCT_EXPORT_METHOD(updateWalletItem: (NSString *) key
 {
   NSString *recordType = @"record_type";
 
-  [[[ConnectMeVcx alloc] init] updateRecordWallet:recordType
+  [[[VertiTransferVCX alloc] init] updateRecordWallet:recordType
                                      withRecordId:key
                                   withRecordValue:value
                                    withCompletion:^(NSError *error) {
@@ -487,7 +487,7 @@ RCT_EXPORT_METHOD(proofCreateWithMsgId: (NSString *)sourceId
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofCreateWithMsgId:sourceId
+  [[[VertiTransferVCX alloc] init] proofCreateWithMsgId:sourceId
                                withConnectionHandle:connectionHandle
                                           withMsgId:msgId
                                      withCompletion:^(NSError *error, vcx_proof_handle_t proofHandle, NSString *proofRequest)
@@ -509,7 +509,7 @@ RCT_EXPORT_METHOD(proofRetrieveCredentials:(NSInteger)proofHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofRetrieveCredentials:proofHandle
+  [[[VertiTransferVCX alloc] init] proofRetrieveCredentials:proofHandle
                                          withCompletion:^(NSError *error, NSString *matchingCredentials)
   {
     if (error != nil && error.code != 0) {
@@ -528,7 +528,7 @@ RCT_EXPORT_METHOD(proofGenerate:(NSInteger)proofHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofGenerate:proofHandle
+  [[[VertiTransferVCX alloc] init] proofGenerate:proofHandle
                      withSelectedCredentials:selectedCredentials
                        withSelfAttestedAttrs:selfAttestedAttributes
                               withCompletion:^(NSError *error)
@@ -548,7 +548,7 @@ RCT_EXPORT_METHOD(proofSend:(NSInteger)proof_handle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofSend:proof_handle
+  [[[VertiTransferVCX alloc] init] proofSend:proof_handle
                     withConnectionHandle:connection_handle
                           withCompletion:^(NSError *error)
   {
@@ -567,7 +567,7 @@ RCT_EXPORT_METHOD(proofCreateWithRequest:(NSString*)sourceId
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofCreateWithRequest:sourceId
+  [[[VertiTransferVCX alloc] init] proofCreateWithRequest:sourceId
                                      withProofRequest:proofRequest
                                        withCompletion:^(NSError *error, vcx_proof_handle_t proofHandle)
   {
@@ -585,7 +585,7 @@ RCT_EXPORT_METHOD(proofSerialize:(NSInteger)proofHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofSerialize:proofHandle
+  [[[VertiTransferVCX alloc] init] proofSerialize:proofHandle
                                withCompletion:^(NSError *error, NSString *proof_request)
   {
     if (error != nil && error.code != 0) {
@@ -602,7 +602,7 @@ RCT_EXPORT_METHOD(proofDeserialize:(NSString *)serializedProof
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] proofDeserialize:serializedProof
+  [[[VertiTransferVCX alloc] init] proofDeserialize:serializedProof
                                  withCompletion:^(NSError *error, vcx_proof_handle_t proofHandle)
   {
     if (error != nil && error.code != 0) {
@@ -621,7 +621,7 @@ RCT_EXPORT_METHOD(downloadMessages: (NSString *) messageStatus
                           resolver: (RCTPromiseResolveBlock) resolve
                           rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] downloadMessages: messageStatus uid_s:uid_s pwdids:pwdids completion:^(NSError *error, NSString *messages) {
+  [[[VertiTransferVCX alloc] init] downloadMessages: messageStatus uid_s:uid_s pwdids:pwdids completion:^(NSError *error, NSString *messages) {
     if (error != nil && error.code !=0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occured while downloading messages", error);
@@ -635,7 +635,7 @@ RCT_EXPORT_METHOD(downloadMessages: (NSString *) messageStatus
                         resolver: (RCTPromiseResolveBlock) resolve
                         rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] updateMessages:messageStatus pwdidsJson:pwdidsJson completion:^(NSError *error) {
+  [[[VertiTransferVCX alloc] init] updateMessages:messageStatus pwdidsJson:pwdidsJson completion:^(NSError *error) {
     if (error != nil && error.code !=0) {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
       reject(indyErrorCode, @"Error occured while updating message status", error);
@@ -649,7 +649,7 @@ RCT_EXPORT_METHOD(getTokenInfo:(NSInteger) paymentHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] getTokenInfo:paymentHandle withCompletion:^(NSError *error, NSString *tokenInfo) {
+  [[[VertiTransferVCX alloc] init] getTokenInfo:paymentHandle withCompletion:^(NSError *error, NSString *tokenInfo) {
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
@@ -666,7 +666,7 @@ RCT_EXPORT_METHOD(sendTokens:(NSInteger) paymentHandle
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] sendTokens:paymentHandle
+  [[[VertiTransferVCX alloc] init] sendTokens:paymentHandle
                                withTokens:tokens
                             withRecipient:recipient
                            withCompletion:^(NSError *error, NSString *recipient)
@@ -685,7 +685,7 @@ RCT_EXPORT_METHOD(createPaymentAddress:(NSString*)seed
                   resolver: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] createPaymentAddress:seed
+  [[[VertiTransferVCX alloc] init] createPaymentAddress:seed
                                      withCompletion:^(NSError *error, NSString *address)
   {
     if (error != nil && error.code != 0)
@@ -716,7 +716,7 @@ RCT_EXPORT_METHOD(createWalletKey: (NSInteger) lengthOfKey
 RCT_EXPORT_METHOD(getLedgerFees: (RCTPromiseResolveBlock) resolve
                   rejecter: (RCTPromiseRejectBlock) reject)
 {
-  [[[ConnectMeVcx alloc] init] getLedgerFees:^(NSError *error, NSString *fees) {
+  [[[VertiTransferVCX alloc] init] getLedgerFees:^(NSError *error, NSString *fees) {
     if (error != nil && error.code != 0)
     {
       NSString *indyErrorCode = [NSString stringWithFormat:@"%ld", (long)error.code];
