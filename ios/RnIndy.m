@@ -785,6 +785,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RnIndy.h"
 
 // #import "main.h"
 
@@ -1057,7 +1058,7 @@ static NSString *const VcxErrorDomain = @"VcxErrorDomain";
 // -- rnindy
 
 
-#import "RnIndy.h"
+
 
 #import <React/RCTLog.h>
 #import <LocalAuthentication/LocalAuthentication.h>
