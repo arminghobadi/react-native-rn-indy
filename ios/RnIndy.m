@@ -791,7 +791,7 @@
 // --- START VcxLogger.m
 
 
-@interface VcxLogger ()
+@interface VcxLogger
 
 @property(strong, readwrite) NSMutableArray *callbacks;
 
@@ -863,7 +863,7 @@ void logCallback(const void *context,
 static NSString *commandCallbackKey = @"commandCallback";
 
 
-@interface VcxCallbacks ()
+@interface VcxCallbacks 
 
 @property(strong, readwrite) NSMutableDictionary *commandCompletions;
 @property int32_t commandHandleCounter;
@@ -1383,7 +1383,7 @@ void VcxWrapperCommonNumberStringCallback(vcx_command_handle_t xcommand_handle,
 }
 
 
-@interface ConnectMeVcx ()
+@interface ConnectMeVcx 
 
 @end
 
