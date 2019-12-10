@@ -797,7 +797,7 @@
 
 @end
 
-@implementation VcxLogger : NSObject
+@implementation VcxLogger
 
 + (void)setDefaultLogger:(NSString *)pattern {
     vcx_set_default_logger([pattern UTF8String]);
