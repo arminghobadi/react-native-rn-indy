@@ -28,9 +28,138 @@
 // // RCT_EXPORT_MODULE(RnIndy);
 
 
+// --- START NSError+VcxError.h
 
 
+#import <Foundation/Foundation.h>
 
+@interface NSError (VcxError)
+
++ (NSError*) errorFromVcxError:(vcx_error_t) error;
+
+@end
+
+
+// --- END NSError+VcxError.h
+
+// --- START VcxCallbacks.h
+
+
+@interface VcxCallbacks : NSObject
+
+// MARK: - Store callback and create command handle
+- (vcx_command_handle_t)createCommandHandleFor:(id)callback;
+
+- (id)commandCompletionFor:(vcx_command_handle_t)handle;
+
+- (void)deleteCommandHandleFor:(vcx_command_handle_t)handle;
+
+- (void)complete:(void (^)(NSError *))completion
+       forHandle:(vcx_command_handle_t)handle
+         ifError:(vcx_error_t)ret;
+
+- (void)completeBool:(void (^)(NSError *, BOOL))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret;
+
+- (void)completeStr:(void (^)(NSError *, NSString *))completion
+          forHandle:(vcx_command_handle_t)handle
+            ifError:(vcx_error_t)ret;
+
+- (void)complete2Str:(void (^)(NSError *, NSString *, NSString *))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret;
+
+- (void)completeData:(void (^)(NSError *, NSData *))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret;
+
+
+- (void)completeStringAndData:(void (^)(NSError *, NSString *, NSData *))completion
+                    forHandle:(vcx_command_handle_t)handle
+                      ifError:(vcx_error_t)ret;
+
++ (VcxCallbacks *)sharedInstance;
+
+@end
+
+
+// --- END VcxCallbacks.h
+
+
+// START VcxErrors.h
+
+
+#ifndef VcxErrors_h
+#define VcxErrors_h
+
+typedef NS_ENUM(NSInteger, VcxErrorCode)
+{
+    Success = 0
+};
+
+#endif /* VcxErrors_h */
+
+
+// --- END VcxErrors.h
+
+// --- START VcxLogger.h
+
+
+@interface VcxLogger : NSObject
+
+/**
+ Set default libvcx logger implementation.
+
+ Allows library user use `env_logger` logger as default implementation.
+ More details about `env_logger` and its customization can be found here: https://crates.io/crates/env_logger
+
+ NOTE: You should specify either `pattern` parameter or `RUST_LOG` environment variable to init logger.
+ NOTE: Logger can be set only once.
+
+ @param  pattern: (Optional) pattern that corresponds with the log messages to show.
+ */
++ (void)setDefaultLogger:(NSString *)pattern;
+
+/**
+ Set custom libvcx log function.
+
+ NOTE: Logger can be set only once.
+
+ @param  logCb: function will be called to log a record.
+ */
++ (void)setLogger:(id)logCb;
+
++ (VcxLogger *)sharedInstance;
+
+- (VcxLogger *)init;
+
+@end
+
+void logCallback(const void *context,
+        uint32_t level,
+        const char *target,
+        const char *message,
+        const char *modulePath,
+        const char *file,
+        uint32_t line);
+
+
+// --- END VcxLogger.h
+
+
+// --- START VcxTypes.h
+
+
+#ifndef VcxTypes_h
+#define VcxTypes_h
+
+typedef SInt32 VcxHandle;
+
+#endif /* VcxTypes_h */
+
+
+// --- END VcxTypes.h
 
 
 // --- START vcx.h

@@ -786,11 +786,273 @@
 
 #import <Foundation/Foundation.h>
 
-#import "utils/NSError+VcxError.h"
-#import "utils/VcxCallbacks.h"
-#import "main.h"
+// #import "main.h"
+
+// --- START VcxLogger.m
 
 
+@interface VcxLogger ()
+
+@property(strong, readwrite) NSMutableArray *callbacks;
+
+@end
+
+@implementation VcxLogger : NSObject
+
++ (void)setDefaultLogger:(NSString *)pattern {
+    vcx_set_default_logger([pattern UTF8String]);
+}
+
++ (void)setLogger:(id)logCb {
+    [VcxLogger sharedInstance].callbacks[0] = [logCb copy];
+    vcx_set_logger(nil, nil, logCallback, nil);
+}
+
++ (VcxLogger *)sharedInstance {
+    static VcxLogger *instance = nil;
+    static dispatch_once_t dispatch_once_block;
+
+    dispatch_once(&dispatch_once_block, ^{
+        instance = [VcxLogger new];
+    });
+
+    return instance;
+}
+
+- (VcxLogger *)init {
+    self = [super init];
+    if (self) {
+        self.callbacks = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+void logCallback(const void *context,
+        uint32_t level,
+        const char *target,
+        const char *message,
+        const char *modulePath,
+        const char *file,
+        uint32_t line) {
+    id block = [VcxLogger sharedInstance].callbacks[0];
+
+    void (^completion)(NSObject *, NSNumber *, NSString *, NSString *, NSString *, NSString *, NSNumber *) =
+    (void (^)(NSObject *context, NSNumber *level, NSString *target, NSString *message, NSString *modulePath, NSString *file, NSNumber *line)) block;
+    NSObject *sarg0 = (__bridge NSObject *) context;
+    NSNumber *sarg1 = @(level);
+    NSString *sarg2 = [NSString stringWithUTF8String:target];
+    NSString *sarg3 = [NSString stringWithUTF8String:message];
+    NSString *sarg4 = [NSString stringWithUTF8String:modulePath];
+    NSString *sarg5 = [NSString stringWithUTF8String:file];
+    NSNumber *sarg6 = @(line);
+
+    if (completion) {
+        completion(sarg0, sarg1, sarg2, sarg3, sarg4, sarg5, sarg6);
+    }
+}
+
+@end
+
+
+
+// --- END VcxLogger.n
+
+// --- START VcxCallbacks.mm
+
+
+static NSString *commandCallbackKey = @"commandCallback";
+
+
+@interface VcxCallbacks ()
+
+@property(strong, readwrite) NSMutableDictionary *commandCompletions;
+@property int32_t commandHandleCounter;
+@property(strong, readwrite) NSRecursiveLock *globalLock;
+
+@end
+
+@implementation VcxCallbacks
+
++ (VcxCallbacks *)sharedInstance {
+    static VcxCallbacks *instance = nil;
+    static dispatch_once_t dispatch_once_block;
+
+    dispatch_once(&dispatch_once_block, ^{
+        instance = [VcxCallbacks new];
+    });
+
+    return instance;
+}
+
+- (VcxCallbacks *)init {
+    self = [super init];
+    if (self) {
+        self.commandHandleCounter = 0;
+        self.commandCompletions = [[NSMutableDictionary alloc] init];
+        self.globalLock = [NSRecursiveLock new];
+    }
+    return self;
+}
+
+// MARK: - Create command handle and store callback
+
+- (vcx_command_handle_t)createCommandHandleFor:(id)callback {
+    NSNumber *handle = nil;
+
+    @synchronized (self.globalLock) {
+        handle = [NSNumber numberWithInt:self.commandHandleCounter];
+        self.commandHandleCounter++;
+
+        NSMutableDictionary *dict = [NSMutableDictionary new];
+        dict[commandCallbackKey] = [callback copy];
+
+        self.commandCompletions[handle] = dict;
+    }
+    return (vcx_command_handle_t) [handle integerValue];
+}
+
+- (void)deleteCommandHandleFor:(vcx_command_handle_t)handle {
+    NSNumber *key = [NSNumber numberWithInt:handle];
+    @synchronized (self.globalLock) {
+        if ([self.commandCompletions objectForKey:key]) {
+            [self.commandCompletions removeObjectForKey:key];
+        }
+    }
+}
+
+- (id)commandCompletionFor:(vcx_command_handle_t)handle {
+    NSNumber *key = [NSNumber numberWithInt:handle];
+    id val = nil;
+    @synchronized (self.globalLock) {
+        NSMutableDictionary *dict = (NSMutableDictionary *) [self.commandCompletions objectForKey:key];
+        val = [dict objectForKey:@"commandCallback"];
+    }
+    return val;
+}
+
+- (void)complete:(void (^)(NSError *))completion
+       forHandle:(vcx_command_handle_t)handle
+         ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret]);
+        });
+    }
+}
+
+- (void)completeBool:(void (^)(NSError *, BOOL))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], false);
+        });
+    }
+}
+
+- (void)completeStr:(void (^)(NSError *, NSString *))completion
+          forHandle:(vcx_command_handle_t)handle
+            ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], nil);
+        });
+    }
+}
+
+- (void)complete2Str:(void (^)(NSError *, NSString *, NSString *))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], nil, nil);
+        });
+    }
+}
+
+- (void)completeData:(void (^)(NSError *, NSData *))completion
+           forHandle:(vcx_command_handle_t)handle
+             ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], nil);
+        });
+    }
+}
+
+- (void)complete2Data:(void (^)(NSError *, NSData *, NSData *))completion
+            forHandle:(vcx_command_handle_t)handle
+              ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], nil, nil);
+        });
+    }
+}
+
+- (void)completeStringAndData:(void (^)(NSError *, NSString *, NSData *))completion
+                    forHandle:(vcx_command_handle_t)handle
+                      ifError:(vcx_error_t)ret {
+    if (ret != Success) {
+        [self deleteCommandHandleFor:handle];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            completion([NSError errorFromVcxError:ret], nil, nil);
+        });
+    }
+}
+
+@end
+
+// MARK: - static indy C-callbacks
+
+
+
+
+// --- END VcxCallbacks.mm
+
+
+// --- START NSError+VcxError.m
+
+
+static NSString *const VcxErrorDomain = @"VcxErrorDomain";
+
+@implementation NSError (VcxError)
+
++ (NSError*) errorFromVcxError:(vcx_error_t) error
+{
+    NSMutableDictionary *userInfo = [NSMutableDictionary new];
+
+    if (error != Success) {
+        const char * error_json_p;
+            vcx_get_current_error(&error_json_p);
+
+            NSString *errorDetailsJson = [NSString stringWithUTF8String:error_json_p];
+
+            NSError *error;
+            NSDictionary *errorDetails = [NSJSONSerialization JSONObjectWithData:[NSData dataWithBytes:[errorDetailsJson UTF8String]
+                                                                                                length:[errorDetailsJson length]]
+                                                                                            options:kNilOptions
+                                                                                            error: &error];
+
+           [userInfo setValue:errorDetails[@"error"] forKey:@"sdk_message"];
+            [userInfo setValue:errorDetails[@"message"] forKey:@"sdk_full_message"];
+            [userInfo setValue:errorDetails[@"cause"] forKey:@"sdk_cause"];
+            [userInfo setValue:errorDetails[@"backtrace"] forKey:@"sdk_backtrace"];
+       }
+
+    return [NSError errorWithDomain:VcxErrorDomain code: error userInfo:userInfo];
+}
+
+@end
+
+
+// --- END NSError+VcxError.m
 
 // -- rnindy
 
