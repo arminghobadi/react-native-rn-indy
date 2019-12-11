@@ -12,6 +12,7 @@
 #import "utils/VcxCallbacks.h"
 #import "vcx.h"
 #include "vcx.h"
+#import "libvcx.h"
 
 void VcxWrapperCommonCallback(vcx_command_handle_t xcommand_handle,
                               vcx_error_t err) {

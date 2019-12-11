@@ -11,6 +11,7 @@
 #import "vcx/utils/NSError+VcxError.h"
 #import "vcx/utils/VcxCallbacks.h"
 #import "vcx/vcx/vcx.h"
+#import "libvcx.h"
 #include "vcx/vcx/vcx.h"
 // #import "VertiTransferVCX.h"
 
