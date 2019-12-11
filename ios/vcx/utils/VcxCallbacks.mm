@@ -83,7 +83,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)complete:(void (^)(NSError *))completion
        forHandle:(vcx_command_handle_t)handle
          ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret]);
@@ -94,7 +94,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)completeBool:(void (^)(NSError *, BOOL))completion
            forHandle:(vcx_command_handle_t)handle
              ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], false);
@@ -105,7 +105,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)completeStr:(void (^)(NSError *, NSString *))completion
           forHandle:(vcx_command_handle_t)handle
             ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], nil);
@@ -116,7 +116,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)complete2Str:(void (^)(NSError *, NSString *, NSString *))completion
            forHandle:(vcx_command_handle_t)handle
              ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], nil, nil);
@@ -127,7 +127,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)completeData:(void (^)(NSError *, NSData *))completion
            forHandle:(vcx_command_handle_t)handle
              ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], nil);
@@ -138,7 +138,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)complete2Data:(void (^)(NSError *, NSData *, NSData *))completion
             forHandle:(vcx_command_handle_t)handle
               ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], nil, nil);
@@ -149,7 +149,7 @@ static NSString *commandCallbackKey = @"commandCallback";
 - (void)completeStringAndData:(void (^)(NSError *, NSString *, NSData *))completion
                     forHandle:(vcx_command_handle_t)handle
                       ifError:(vcx_error_t)ret {
-    if (ret != Success) {
+    if (ret != 0) {
         [self deleteCommandHandleFor:handle];
         dispatch_async(dispatch_get_main_queue(), ^{
             completion([NSError errorFromVcxError:ret], nil, nil);
